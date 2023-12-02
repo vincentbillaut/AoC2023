@@ -11,10 +11,8 @@ get_positions = lambda s, ref: [(-1 if n not in s else s.find(n)) for n in ref]
 
 def first_digit_or_spelled_out(s, n_list):
     digits, positions = [(i, int(c)) for i, c in enumerate(s) if c in '0123456789'], [(pos, i + 1) for i, pos in enumerate(get_positions(s, n_list))]
-    # print(digits, positions)
     first_digit = digits[0]
     first_spelled_out = min([(pos, v) for pos, v in positions if pos > -1], key=lambda pair: pair[0], default=(-1, None))
-    # print(first_digit, first_spelled_out)
     if first_spelled_out[1] is not None and first_spelled_out[0] < first_digit[0]:
         return first_spelled_out[1]
     return first_digit[1]
