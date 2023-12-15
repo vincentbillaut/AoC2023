@@ -21,14 +21,16 @@ def cycle(l_input):
     return l
 
 def cycle_n(l_input, n):
-    memory, loads = {hash_data(l_input)}, [load(l_input)]
+    memory_set, memory_list, loads = {hash_data(l_input)}, [hash_data(l_input)], [load(l_input)]
     l = cycle(l_input)
-    while hash_data(l) not in memory:
-        memory.add(hash_data(l))
+    while hash_data(l) not in memory_set:
+        memory_set.add(hash_data(l))
+        memory_list.append(hash_data(l))
         loads.append(load(l))
         l = cycle(l)
-    period = len(memory)
-    return loads[n % period]
+    offset = memory_list.index(hash_data(l))
+    period = len(memory_set) - offset
+    return loads[(n - offset) % period + offset]
 
 print(load(slide_north(data)))
 print(cycle_n(data, 1000000000))
